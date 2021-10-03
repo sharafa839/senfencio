@@ -15,7 +15,7 @@ var id = String()
     var order : OrdersPayload?
     @IBOutlet weak var titleLa: UILabel!{
         didSet{
-            titleLa.text = "Track Order"
+            titleLa.text = "Track Order".localizede
         }
     }
     @IBOutlet weak var orderId: UILabel!
@@ -28,6 +28,13 @@ var id = String()
         didSet{
             acceptedImag.image = UIImage(named: "package")?.withTintColor(.gray)
         }
+    }
+    func dismss(){
+        back.rx.tap.subscribe { [weak self]_ in
+            guard let self = self else {return}
+            self.dismiss(animated: true, completion: nil)
+        }.disposed(by: disposeBag)
+
     }
     @IBOutlet weak var acceptedTime: UILabel!
     @IBOutlet weak var acceptedDate: UILabel!
@@ -86,13 +93,14 @@ var id = String()
         super.viewDidLoad()
         tableView.tableFooterView?.isHidden = true
         orderId.text = order?.id
-        numberOfItems.text = "\(order?.items?.count ?? 00)  Items"
-        amountOfMoney.text = "\(order?.totalCost ?? 00)   OMR"
-        timeOfOrder.text = "Order at Senfineco : " + (order?.date)!
+        numberOfItems.text = "\(order?.items?.count ?? 00)" + "Items".localizede
+        amountOfMoney.text = "\(order?.totalCost ?? 00)" + "   OMR".localizede
+        timeOfOrder.text = "Order at Senfineco : \t".localizede + (order?.date)!
         // Do any additional setup after loading the view.
         backing()
         getdata()
         subscribeToResponse()
+        dismss()
     }
     func backing()  {
         back.rx.tap.subscribe {[weak self] (_) in
@@ -103,13 +111,27 @@ var id = String()
 
     }
     func getdata(){
-        orderTrack.trackOrder(id: id)
+        orderTrack.trackOrder(id: id, vc: self)
     }
     func subscribeToResponse() {
         orderTrack.subscribeTrackRespone.subscribe { (data) in
             if data.element?.status == "pending"{
                 self.acceptedImag.image = UIImage(named: "package")?.withTintColor(.orange)
 
+            }else if data.element?.status == "accepted"{
+                self.acceptedImag.image = UIImage(named: "package")?.withTintColor(.orange)
+            }else if data.element?.status == "accepted" {
+                self.acceptedImag.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.processedImge.image = UIImage(named: "package")?.withTintColor(.orange)
+            }else if data.element?.status == "accepted" {
+                self.acceptedImag.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.processedImge.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.onWayImage.image = UIImage(named: "package")?.withTintColor(.orange)
+            }else if data.element?.status == "accepted" {
+                self.acceptedImag.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.processedImge.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.onWayImage.image = UIImage(named: "package")?.withTintColor(.orange)
+                self.deliverdImage.image = UIImage(named: "package")?.withTintColor(.orange)
             }
         }.disposed(by: disposeBag)
     }

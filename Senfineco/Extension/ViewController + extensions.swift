@@ -49,3 +49,7 @@ print(url)
     }
     }
 }
+extension UIColor {
+    
+    static let borderColor = UIColor(red: 0, green: 0.68, blue: 0.71, alpha: 1)
+}

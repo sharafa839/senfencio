@@ -11,10 +11,15 @@ import RxSwift
 import RxCocoa
 class WishListVC: UIViewController {
 
-    @IBOutlet weak var titleLa: UILabel!
+    @IBOutlet weak var titleLa: UILabel!{
+        didSet{
+            titleLa.text = "wish List".localizede
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var back: UIButton!
-    
+    let product = ProductVM()
+
+
     var dataSource : RxTableViewSectionedReloadDataSource<SectionModel>?
     let Wishs = Wish()
     let disposeBag = DisposeBag()
@@ -26,15 +31,23 @@ class WishListVC: UIViewController {
             tablView.rowHeight = 180
             let cell = tablView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WishListTVC
             cell.confCell(wish: Item)
-            cell.addToCart.rx.tap.subscribe { (_) in
+            cell.addToCart.rx.tap.subscribe {[weak self] (_) in
+                guard let self = self else {return}
 
+                self.product.AddToCart(productId: Item.productID ?? "", quantity: 1, customer: true, vc: self)
+            }.disposed(by: self?.disposeBag ?? DisposeBag())
+            cell.delete.rx.tap.subscribe { [weak self](_) in
+                guard let self = self else {return}
+                self.Wishs.deleteFromWishList(id: Item.id
+                                                ?? "", vc: self)
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "hom")
+                self.present(vc!, animated: true, completion: nil)
             }.disposed(by: self?.disposeBag ?? DisposeBag())
 
             return cell
             
         })
 getData()
-    backButton()
         subscribeToResponse()
         // Do any additional setup after loading the view.
     }
@@ -44,18 +57,9 @@ getData()
     }
     func subscribeToResponse(){
         Wishs.wishRespnseObservable.map ({ SectionMode  in
-            [SectionModel(header: "Ahmed", items: SectionMode)]
+            [SectionModel(header: "", items: SectionMode)]
         
         }).bind(to: tableView.rx.items(dataSource: dataSource!)).disposed(by: disposeBag)
-    }
-    func backButton(){
-        back.rx.tap.throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance)
-            .subscribe {[weak self] (_) in
-                guard let self = self else {return}
-
-                self.dismiss(animated: true, completion: nil)
-            }.disposed(by: disposeBag)
-
     }
     /*
     // MARK: - Navigation

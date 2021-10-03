@@ -68,7 +68,8 @@ class HelperK: NSObject {
     }
     class func getname ()->String{
         let def = UserDefaults.standard
-        return (def.object(forKey: "name") as! String)
+    
+        return (def.object(forKey: "fname") as! String)
     }
     class func getphone()->String{
         let def = UserDefaults.standard
@@ -181,16 +182,32 @@ class HelperK: NSObject {
     }
     
     class func setUserData(phone:String,
-                           name:String,
-                           image:String,
-                           email:String,code:String){
+                           lname:String,
+                           fname:String,
+                           email:String,type:String){
         
         let def = UserDefaults.standard
         def.setValue(phone, forKey: "phone")
-        def.setValue(image, forKey: "image")
-        def.setValue(name, forKey: "name")
+        def.setValue(fname, forKey: "fname")
+        def.setValue(lname, forKey: "lname")
         def.setValue(email, forKey: "email")
-        def.setValue(code, forKey: "type")
+        def.setValue(type, forKey: "type")
+
+        def.synchronize()
+    }
+    class func setSellerData(phone:String,
+                           lname:String,
+                           fname:String,
+                           email:String,type:String,company:String,crn:String){
+        
+        let def = UserDefaults.standard
+        def.setValue(phone, forKey: "phone")
+        def.setValue(fname, forKey: "fname")
+        def.setValue(lname, forKey: "lname")
+        def.setValue(email, forKey: "email")
+        def.setValue(type, forKey: "type")
+        def.setValue(company, forKey: "company")
+        def.setValue("crn", forKey: "crn")
 
         def.synchronize()
     }
@@ -205,6 +222,14 @@ class HelperK: NSObject {
     class func getType() -> String {
         let def = UserDefaults.standard
         return (def.object(forKey: "type") as! String)
+    }
+    class func getCrn() -> String {
+        let def = UserDefaults.standard
+        return (def.object(forKey: "crn") as! String)
+    }
+    class func getCompany() -> String {
+        let def = UserDefaults.standard
+        return (def.object(forKey: "company") as! String)
     }
     class func getphoto() -> String {
         let def = UserDefaults.standard

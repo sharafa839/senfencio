@@ -11,14 +11,14 @@ import UIKit
 //MARK:- MenuCell
 class TopSideMenuCell: UITableViewCell {
     @IBOutlet weak var personName:UILabel!
-    @IBOutlet weak var ordersNumber: UILabel!{
+    @IBOutlet weak var ordersNumber: UILabel!
+    @IBOutlet weak var imageV: UIView!{
         didSet{
-            ordersNumber.text = "order".localizede
-            ordersNumber.floatView(raduis: 15)
-            ordersNumber.setRoundCorners(15)
-
+            imageV.floatView(raduis: 5)
+            imageV.applyShadowWithCornerRadius(color: .borderColor, opacity: 0.5, radius: 15, edge: .All, shadowSpace: 5, cornerRadius: 5)
         }
     }
+    
     @IBOutlet weak var wallet: UILabel!{
         didSet{
             wallet.text = "wallet".localizede
@@ -29,7 +29,10 @@ class TopSideMenuCell: UITableViewCell {
     }
     @IBOutlet weak var IMAGEPROFILE:UIImageView!{
         didSet{
-            IMAGEPROFILE.setRoundCorners(IMAGEPROFILE.frame.size.height / 2)
+           // IMAGEPROFILE.setRoundCorners(IMAGEPROFILE.frame.size.height / 2)
+            //
+            IMAGEPROFILE.image = UIImage(named: "Logo-01 1")
+            
         }
     }
     @IBOutlet weak var welcomLab: UILabel!

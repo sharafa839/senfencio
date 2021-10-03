@@ -12,11 +12,12 @@ struct LoginModel: Codable {
     let payload: Payload?
     let accessToken: String?
     let status: Bool?
-
+    let code :Int?
+    let message:String?
     enum CodingKeys: String, CodingKey {
         case payload
         case accessToken = "access_token"
-        case status
+        case status,code,message
     }
 }
 

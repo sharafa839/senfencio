@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Alamofire
 class HomeVM {
     private let publishCategoryResponse = PublishSubject<[CategoryPayload]>.init()
     var subscribeCategoryResponse : Observable<[CategoryPayload]>{
@@ -17,8 +18,11 @@ class HomeVM {
     var subscribeProductResponse : Observable<[ProductPayload]>{
         return publishProductResponse
     }
-    func getCategory(){
+    func getCategory(vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.category, method: .get, paameters: nil, headers: Headers.AccepTTokenHeaders()) {[weak self] (category:Category?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
+
             if code == 200 {
                 guard let self = self else {return}
 
@@ -28,17 +32,42 @@ class HomeVM {
                     }
                     self.publishCategoryResponse.onNext(cat)
                 }else{
-                    HelperK.showError(title: category?.message ?? "err", subtitle: "")
+                    HelperK.showError(title: category?.message ?? "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: category?.message ?? "err", subtitle: "")
+                HelperK.showError(title: category?.message ?? "err".localizede, subtitle: "")
 
             }
         }
     }
+    func specialCallApi(productName:String,vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
+        let url = URLS.ProductInOneCategoty + productName
+       let ur =  url.replacingOccurrences(of: " ", with: "%20")
+        AF.request(ur, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: Headers.AccepTTokenHeaders(), interceptor: CustomInterceptor.self as? RequestInterceptor).responseJSON { (response) in
+            LottieHelper.shared.hideAnimation()
 
-    func getProduct(){
+            if response.response?.statusCode  == 200 {
+            guard let data = response.data else {return}
+            do {
+                let res = try JSONDecoder().decode(Product.self, from: data)
+                guard let res = res.payload else {
+                    return
+                }
+                self.publishProductResponse.onNext(res)
+            }catch{
+                HelperK.showError(title: "err".localizede, subtitle: "")
+            }
+            
+            }else{
+                HelperK.showError(title: "err".localizede, subtitle: "")
+            }}
+    }
+    func getProduct(vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.fetchAllProducts, method: .get, paameters: nil, headers: Headers.AccepTTokenHeaders()) {[weak self] (category:Product?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
+
             if code == 200 {
                 guard let self = self else {return}
 
@@ -48,16 +77,19 @@ class HomeVM {
                     }
                     self.publishProductResponse.onNext(cat)
                 }else{
-                    HelperK.showError(title: category?.message ?? "err", subtitle: "")
+                    HelperK.showError(title: category?.message ?? "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: category?.message ?? "err", subtitle: "")
+                HelperK.showError(title: category?.message ?? "err".localizede, subtitle: "")
 
             }
         }
     }
-    func getProductByCategory(productName:String){
+    func getProductByCategory(productName:String,vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.ProductInOneCategoty + productName , method: .get, paameters: nil, headers: Headers.AccepTTokenHeaders()) { (products:Product?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
+
             if code == 200 {
                 if err == nil {
                     guard  let cat = products?.payload  else {
@@ -65,10 +97,10 @@ class HomeVM {
                     }
                     self.publishProductResponse.onNext(cat)
                 }else{
-                    HelperK.showError(title: products?.message ?? "err", subtitle: "")
+                    HelperK.showError(title: products?.message ?? "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: products?.message ?? "err", subtitle: "")
+                HelperK.showError(title: products?.message ?? "err".localizede, subtitle: "")
             }
         }
     }

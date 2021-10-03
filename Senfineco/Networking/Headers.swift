@@ -37,7 +37,7 @@ static let header=Headers()
               let dict:HTTPHeaders = [
                   .accept("application/json"),
                   .contentType("application/json"),
-                .authorization(bearerToken: HelperK.getUserToken())              ]
+                .authorization(bearerToken:HelperK.getUserToken())              ]
              return  dict
        }
   class func AcceptContentHeader()-> HTTPHeaders {
@@ -63,7 +63,8 @@ static let header=Headers()
     class func AccepTTokenHeaders()->HTTPHeaders {
         let dict : HTTPHeaders = [
             .accept("application/json"),
-            .authorization(bearerToken: HelperK.getUserToken())]
+            .authorization(bearerToken:HelperK.getUserToken())
+            ]
         return dict
     }
     class  func tokenHeaders()->HTTPHeaders {

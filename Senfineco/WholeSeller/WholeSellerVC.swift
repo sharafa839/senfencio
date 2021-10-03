@@ -28,7 +28,7 @@ class WholeSellerVC: UITableViewController {
             cell.addProductButton.rx.tap.subscribe {[weak self] (_) in
                 guard let self = self else {return}
 
-                self.product.AddToCart(productId: Item.id ?? "", quantity: 1, customer: true)
+                self.product.AddToCart(productId: Item.id ?? "", quantity: 1, customer: true, vc: self)
             }.disposed(by: self?.disposeBag ?? DisposeBag())
            
 
@@ -70,11 +70,11 @@ class WholeSellerVC: UITableViewController {
     
     
     func getCategory(){
-        homeVm.getCategory()
+        homeVm.getCategory(vc: self)
         
     }
     func getProduct(){
-        homeVm.getProduct()
+        homeVm.getProduct(vc: self)
         
     }
     func subscribeToCategoryResponse(){
@@ -109,7 +109,7 @@ class WholeSellerVC: UITableViewController {
         }.disposed(by: disposeBag)
     }
     func subscripeToProductByCatID(name:String){
-        homeVm.getProductByCategory(productName: name)
+        homeVm.getProductByCategory(productName: name, vc: self)
     }
     
 }

@@ -13,7 +13,7 @@ class RecomendedVC: UIViewController {
     @IBOutlet weak var customView: UIView!
     @IBOutlet weak var resultLa: UILabel!{
         didSet{
-            resultLa.text = "result"
+            resultLa.text = "result".localizede
         }
     }
     @IBOutlet weak var content: UILabel!
@@ -36,7 +36,7 @@ getData()
     }
     
     func getData()  {
-        recomend.getRecomend(make: make, model: model, type: type)
+        recomend.getRecomend(make: make, model: model, type: type, vc: self)
     }
     func subscribeToData(){
         recomend.subscribeRecomed.subscribe { [weak self](data) in

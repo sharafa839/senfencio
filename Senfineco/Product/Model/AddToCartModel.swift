@@ -13,3 +13,23 @@ struct AddToCart: Codable {
     let message: String?
     let payload: Bool?
 }
+struct FavModel: Codable {
+    let payload: FavModelPayload?
+    let code: Int?
+    let status: Bool?
+    let message: String?
+}
+
+// MARK: - Payload
+struct FavModelPayload: Codable {
+    let id, userID, productID: String?
+    let price: Int?
+    let curreny, nameAr, name: String?
+    let image: String?
+    enum CodingKeys: String, CodingKey {
+        case id, userID, productID, price, curreny
+        case nameAr = "name_ar"
+        case name, image
+    }
+}
+

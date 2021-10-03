@@ -13,10 +13,12 @@ class Abouts {
     var subscribeToRes : Observable <About>{
         return aboutResponse
     }
-    func getAbout() {
+    func getAbout(vc:UIViewController) {
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
+
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.about, method: .get, paameters: nil, headers: Headers.AccepTTokenHeaders()) {[weak self] (contact:About?, err:Error?, code:Int?) in
             guard let self = self else {return}
-
+            LottieHelper.shared.hideAnimation()
             if code == 200 {
                 if err == nil {
                     HelperK.showSuccess(title: contact?.message ?? "", subtitle: "")

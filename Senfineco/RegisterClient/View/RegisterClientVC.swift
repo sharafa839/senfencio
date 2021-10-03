@@ -18,7 +18,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var signUp: UILabel!{
         didSet{
-            signUp.text = "signUp"
+            signUp.text = "signUp".localizede
         }
     }
     @IBOutlet weak var backButton: UIButton!{
@@ -28,7 +28,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var fNameTF: MDCOutlinedTextField!{
         didSet{
-            fNameTF.label.text = "firstName"
+            fNameTF.label.text = "firstName".localizede
             fNameTF.setOutlineColor(.borderColor, for: .normal)
             fNameTF.setOutlineColor(.borderColor, for: .editing)
 
@@ -36,7 +36,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var lNameTF: MDCOutlinedTextField!{
         didSet{
-            lNameTF.label.text = "lastName"
+            lNameTF.label.text = "lastName".localizede
             lNameTF.setOutlineColor(.borderColor, for: .normal)
             fNameTF.setOutlineColor(.borderColor, for: .editing)
 
@@ -44,7 +44,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var emailTF: MDCOutlinedTextField!{
         didSet{
-            emailTF.label.text = "email"
+            emailTF.label.text = "email".localizede
             emailTF.setOutlineColor(.borderColor, for: .normal)
             emailTF.setOutlineColor(.borderColor, for: .editing)
 
@@ -52,7 +52,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var phoneTF: MDCOutlinedTextField!{
         didSet{
-            phoneTF.label.text = "phone"
+            phoneTF.label.text = "phone".localizede
             phoneTF.keyboardType = .phonePad
             phoneTF.setOutlineColor(.borderColor, for: .normal)
             phoneTF.setOutlineColor(.borderColor, for: .editing)
@@ -62,7 +62,7 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var passTF: MDCOutlinedTextField!{
         didSet{
-            passTF.label.text = "pass"
+            passTF.label.text = "pass".localizede
             passTF.isSecureTextEntry = true
             passTF.setOutlineColor(.borderColor, for: .normal)
             passTF.setOutlineColor(.borderColor, for: .editing)
@@ -71,19 +71,19 @@ class RegisterClientVC: UIViewController {
     }
     @IBOutlet weak var signUPButton: UIButton!{
         didSet{
-            signUPButton.setTitle("signUp", for: .normal)
+            signUPButton.setTitle("signUp".localizede, for: .normal)
             signUPButton.setTitleColor(.gray, for:.disabled)
             signUPButton.floatButton(raduis: 30)
         }
     }
     @IBOutlet weak var infoLa: UILabel!{
         didSet{
-            infoLa.text = "ifuhaveacc"
+            infoLa.text = "ifuhaveacc".localizede
         }
     }
     @IBOutlet weak var signInButton: UIButton!{
         didSet{
-            signInButton.setTitle("signIn", for: .normal)
+            signInButton.setTitle("signIn".localizede, for: .normal)
         }
     }
     @objc func back(){
@@ -94,7 +94,7 @@ class RegisterClientVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindTextField()
-        subscribeToIsSignUpButtonEnabled()
+       // subscribeToIsSignUpButtonEnabled()
         subscribeToSignupButton()
         subscribeToResponse()
     }
@@ -133,8 +133,10 @@ class RegisterClientVC: UIViewController {
     func subscribeToSignupButton()  {
         signUPButton.rx.tap.throttle(RxTimeInterval.microseconds(500), scheduler: MainScheduler.instance).subscribe {[weak self] (_) in
             guard let self = self else {return}
+            self.signUPButton.secAnimation()
+
             self.checkValidat()
-            self.registerVm.register()
+            self.registerVm.register(vc: self)
         }.disposed(by: disposeBag)
 }
     func subscribeToIsSignUpButtonEnabled() {
@@ -146,9 +148,12 @@ class RegisterClientVC: UIViewController {
                 return
             }
             if data.element?.code == 200 {
-                HelperK.showSuccess(title: "registerSuccess", subtitle: "")
-                
-                HelperK.setUserData(phone: payload.phone ?? "", name: payload.fname! + payload.lname! , image: "", email: payload.email ?? "", code: "")
+                HelperK.showSuccess(title: data.element?.message ?? "", subtitle: "")
+                let vc  = self.storyboard?.instantiateViewController(withIdentifier: "confirm") as! ConfirmVC
+                vc.kind = "customer"
+                vc.id = payload.id ?? ""
+                self.present(vc, animated: true, completion: nil)
+               
                 
             }else{
                 HelperK.showError(title:data.element?.message ?? "" , subtitle: "")

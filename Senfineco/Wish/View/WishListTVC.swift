@@ -21,7 +21,7 @@ class WishListTVC: UITableViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var addToCart: UIButton!{
         didSet{
-            addToCart.setTitle("addToCart", for: .normal)
+            addToCart.setTitle("addToCart".localizede, for: .normal)
             addToCart.floatButton(raduis: 15)
         }
     }
@@ -41,10 +41,12 @@ class WishListTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     func confCell(wish:WishListPayload){
-        productPrice.text = "\(String(describing: wish.price))"
+        productPrice.text = "\(wish.price ?? 0)" + "   OMR".localizede
         productImage.downlodImage(str: wish.image ?? "")
-        
+        if LocalizationManager.shared.getLanguage() == .Arabic {
+            productName.text = wish.nameAr
+        }else{
         productName.text = wish.name
-
+        }
     }
 }

@@ -15,11 +15,11 @@ class APIs: NSObject {
        }
     
     class func genericApiWithPagination<T:Decodable>( pageNo:Int,url:String,method:HTTPMethod,paameters:Parameters?,headers:HTTPHeaders?,completion:@escaping (T?,Error?,Int?) -> ()) {
-        AF.request(url, method: method,parameters:paameters, headers: headers, interceptor: CustomInterceptor()).validate(statusCode: 200..<502).responseJSON { (response) in
+        AF.request(url, method: method,parameters:paameters,encoding: JSONEncoding.default, headers: headers, interceptor: CustomInterceptor()).validate(statusCode: 200..<505).responseJSON { (response) in
             print (response)
-print(paameters)
+            print(paameters)
          switch response.response?.statusCode {
-            case (200..<500)?:
+            case (200..<505)?:
                 
                 switch response.result{
                 case .success(_):
@@ -91,7 +91,7 @@ print(paameters)
         
     
 
-    class func registerProvider(
+   /* class func registerProvider(
                            image:UIImage,
                            params:Parameters,
                            completion: @escaping(_ error:Error?, _ data: CustomerRegister?, _ code:Int?)->()) {
@@ -175,13 +175,15 @@ print(paameters)
                          }}
                       default: HelperK.showError(title: General.stringForKey(key: "somethingWentWrong"), subtitle: "")
                     }}}
-  
-    class func updateImage(image : UIImage,headers:HTTPHeaders, completion: @escaping(_ error:Error?, _ data: ProfileData?,_ code: Int?)->()) {
-        let urlString = URLS.updateProfileLogo
+ 
+  */
+
+    class func updateImage(image : UIImage,headers:HTTPHeaders, completion: @escaping(_ error:Error?, _ data: UploadImageModel?,_ code: Int?)->()) {
+        let urlString = "https://senfineco-oman.co/api/v1/banks/media"
 
         AF.upload(
             multipartFormData: { multipartFormData in
-                multipartFormData.append(image.jpegData(compressionQuality: 0.6)!, withName: "image", fileName: "profile_picture.jpeg", mimeType: "image/jpeg")
+                multipartFormData.append(image.jpegData(compressionQuality: 0.6)!, withName: "file", fileName: "transfer.jpeg", mimeType: "image/jpeg")
         },
             to: urlString,
             method: .post,
@@ -196,7 +198,7 @@ print(paameters)
                         guard let dat = resp.data else { return }
              //              print(JSON(dat))
                         do {
-                            let data = try JSONDecoder().decode(ProfileData.self, from: dat)
+                            let data = try JSONDecoder().decode(UploadImageModel.self, from: dat)
       
                       ActivityIndicatorManager.shared.hideProgressView()
                              completion(nil,data,200)
@@ -208,3 +210,4 @@ print(paameters)
     
     
 }
+

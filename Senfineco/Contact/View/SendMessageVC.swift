@@ -19,21 +19,21 @@ class SendMessageVC: UIViewController {
     }
     @IBOutlet weak var messageTF: MDCOutlinedTextField!{
         didSet{
-            messageTF.label.text = "message"
+            messageTF.label.text = "message".localizede
             messageTF.setOutlineColor(.borderColor, for: .normal)
             messageTF.setOutlineColor(.borderColor, for: .editing)
         }
     }
     @IBOutlet weak var subjectTF: MDCOutlinedTextField!{
         didSet{
-            subjectTF.label.text = "subjectTF"
+            subjectTF.label.text = "subjectTF".localizede
             subjectTF.setOutlineColor(.borderColor, for: .normal)
             subjectTF.setOutlineColor(.borderColor, for: .editing)
         }
     }
     @IBOutlet weak var name: MDCOutlinedTextField!{
         didSet{
-            name.label.text = "name"
+            name.label.text = "name".localizede
             name.setOutlineColor(.borderColor, for: .normal)
             name.setOutlineColor(.borderColor, for: .editing)
 
@@ -41,14 +41,14 @@ class SendMessageVC: UIViewController {
     }
     @IBOutlet weak var titleLa: UILabel!{
         didSet{
-            titleLa.text = "sendMessage"
+            titleLa.text = "sendMessage".localizede
         }
     }
     @IBOutlet weak var back: UIButton!
     @IBOutlet weak var sendMessage: UIButton!{
         didSet{
             sendMessage.floatButton(raduis: 20)
-            sendMessage.setTitle("send", for: .normal)
+            sendMessage.setTitle("send".localizede, for: .normal)
         }
     }
     let messagee = contact()
@@ -79,7 +79,7 @@ subscribeToButton()
             guard let message = self.messageTF.text,!message.isEmpty else{
                 self.messageTF.shakeF()
                 return}
-            self.messagee.sendMessage()
+            self.messagee.sendMessage(vc: self)
         }.disposed(by:disposeBag )
         
     }
@@ -88,7 +88,7 @@ subscribeToButton()
         back.rx.tap.subscribe {[weak self] (_) in
             guard let self = self else {return}
             self.dismiss(animated: true, completion: nil)
-        }
+        }.disposed(by: disposeBag)
     }
 
 

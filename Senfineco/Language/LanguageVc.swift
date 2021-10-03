@@ -19,7 +19,7 @@ class LanguageVc: UIViewController {
    
     @IBOutlet weak var arab: UIStackView!{
         didSet{
-            arab.layer.cornerRadius = 10
+            arab.floatView(raduis: 10)
             arab.clipsToBounds = true
             arab.layer.borderWidth = 0.5
             arab.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
@@ -27,7 +27,7 @@ class LanguageVc: UIViewController {
     }
     @IBOutlet weak var eng: UIStackView!{
     didSet{
-        eng.layer.cornerRadius = 10
+        eng.floatView(raduis: 10)
         eng.clipsToBounds = true
         eng.layer.borderWidth = 0.5
         eng.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
@@ -35,7 +35,7 @@ class LanguageVc: UIViewController {
 }
     @IBOutlet weak var engLangButton: UIButton!{
         didSet{
-            engLangButton.setTitle("en", for: .normal)
+            engLangButton.setTitle("en".localizede, for: .normal)
             engLangButton.addTarget(self, action:  #selector(chooseLanguage), for: .touchUpInside)
             
         }
@@ -43,7 +43,7 @@ class LanguageVc: UIViewController {
    
     @IBOutlet weak var arabLangButton: UIButton!{
         didSet{
-            arabLangButton.setTitle("ar", for: .normal)
+            arabLangButton.setTitle("ar".localizede, for: .normal)
             arabLangButton.addTarget(self, action:  #selector(chooseLanguage1), for: .touchUpInside)
             arabLangButton.layer.cornerRadius = 10
             arabLangButton.clipsToBounds = true
@@ -62,6 +62,8 @@ class LanguageVc: UIViewController {
         }
     }
     @objc func chooseLanguage(){
+        eng.layer.borderWidth = 0
+
         eng.backgroundColor = .init(red: 0.960, green: 0.550, blue: 0.120, alpha: 1)
         arab.backgroundColor = .clear
         arabLangButton.setTitleColor(.init(red: 0, green: 0.31, blue: 0.62, alpha: 1), for: .normal)
@@ -73,11 +75,17 @@ class LanguageVc: UIViewController {
         UserDefaults.standard.synchronize()
         HelperK.saveFristTime(token: 1)
         HelperK.saveLang(Lang:LocalizationManager.shared.getLanguage()?.rawValue ?? "en")
-        HelperK.restartApp()
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "kind") as! KindOfUsersVC
+            self.present(vc, animated: true, completion: nil)
+        }
+      
     }
     @objc func chooseLanguage1(){
+        arab.layer.borderWidth = 0
+
         arab.backgroundColor = .init(red: 0.960, green: 0.550, blue: 0.120, alpha: 1)
+
         eng.backgroundColor = .clear
         engLangButton.setTitleColor(.init(red: 0, green: 0.31, blue: 0.62, alpha: 1), for: .normal)
         arabLangButton.setTitleColor(.white, for: .normal)
@@ -87,9 +95,12 @@ class LanguageVc: UIViewController {
        UserDefaults.standard.set(["ar"], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
         HelperK.saveFristTime(token: 1)
-        HelperK.saveLang(Lang:LocalizationManager.shared.getLanguage()?.rawValue ?? "en")
-        HelperK.restartApp()
-
+        HelperK.saveLang(Lang:LocalizationManager.shared.getLanguage()?.rawValue ?? "ar")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "kind") as! KindOfUsersVC
+            self.present(vc, animated: true, completion: nil)
+        }
+      
     }
     override func viewDidLoad() {
         super.viewDidLoad()

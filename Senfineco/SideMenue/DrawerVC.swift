@@ -37,19 +37,16 @@ class DrawerVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     let transiton = SlideInTransition()
-let profile = ProfileServices()
-    let orderCount = myOrdersVM()
+//let profile = ProfileServices()
+ //   let orderCount = myOrdersVM()
     var NumberOFOrder = Int()
-    var myProfilee : ProfileDataPayload?
+   // var myProfilee : ProfileDataPayload?
     var list = [DrawerModel(titleName: "myOrder".localizede, titleImage: "shopping-bag"),
-                DrawerModel(titleName: "wallet".localizede, titleImage: "wallet"),
+                DrawerModel(titleName: "wholeSaleMarket".localizede, titleImage: "wallet"),
                 DrawerModel(titleName: "Favorite".localizede, titleImage: "love"),
-                DrawerModel(titleName: "getCredit".localizede, titleImage: "gift"),
-                DrawerModel(titleName: "Lang".localizede, titleImage: "global 1"),
-                DrawerModel(titleName: "setlocation".localizede, titleImage: "global 1"),
-                DrawerModel(titleName: "rateUS".localizede, titleImage: "star"),
+                DrawerModel(titleName: "Langu".localizede, titleImage: "global 1"),
+                DrawerModel(titleName: "contactUs".localizede, titleImage: "global 1"),
                 DrawerModel(titleName: "ablut".localizede, titleImage: "doubts-button"),
-                DrawerModel(titleName: "terms&condition".localizede, titleImage: "information"),
                 DrawerModel(titleName: "logOut".localizede, titleImage: "logout 1")
 
     ]
@@ -58,22 +55,7 @@ let profile = ProfileServices()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if HelperK.checkUserToken() == true {
-       profile.getProfile(vc: self) {[weak self] (myProfile) in
-            guard let self = self else {return}
-            self.myProfilee = myProfile
-        }
-        orderCount.getAllOrders(type: HelperK.getType(), vc: self) { (allorders) in
-          //  guard let self = self else {return}
-
-            guard let accept = allorders?.payload?.count else {return}
-           
-            self.NumberOFOrder = accept 
-            print(55555,self.NumberOFOrder)
-            self.tableView.reloadData()
-        }}else{
-            
-        }
+      
         self.continer.backgroundColor = UIColor.black.withAlphaComponent(1)
         self.continer.addActionn(vc: self, action: #selector(dissmissAction))
         
@@ -125,15 +107,10 @@ extension DrawerVC : UITableViewDelegate, UITableViewDataSource     {
     func  initTopCell(indexPath:IndexPath) -> TopSideMenuCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopSideMenuCell", for: indexPath) as! TopSideMenuCell
         if HelperK.checkUserToken() == true {
-            cell.personName.text = HelperK.getname()
-            cell.welcomLab.text = HelperK.getemail()
-            cell.wallet.text = "Walletr".localizede + "\n" + "\(myProfilee?.walletBalance ?? 000)" + "   SAR".localizede
-            cell.ordersNumber.text = "ORDERS".localizede + "\n" + "\(NumberOFOrder)"
-            cell.IMAGEPROFILE.downlodImage(str: URLS.main + HelperK.getphoto())
+         
         }else{
             cell.personName.alpha = 0
             cell.welcomLab.alpha = 0
-            cell.IMAGEPROFILE.image = UIImage(named: "Ellipse 15")
         }
         return cell
     }
@@ -162,28 +139,22 @@ extension DrawerVC : UITableViewDelegate, UITableViewDataSource     {
         case 0 :
             gotoOrders()
         case 1 :
-GoToWallet()
+            GoTowholeSeller()
         case 2 :
 gotoFavss()
         case 3 :
-          GoToCrediet()
-        case 4 :
             GoToLang()
 
-        case 5:
-           
-gotosetLocation()
-        case 6:
+        case 4 :
             self.gotorate()
-        case 7:
+
+        case 5:
             GoToAbout()
 
-        case 8 :
-            GoToterms()
-
-        case 9 :
+        case 6:
             LogOut()
 
+       
         default:
             print("done")
         }
@@ -202,8 +173,8 @@ gotosetLocation()
         self.present(vc!, animated: true, completion: nil)
     }
     
-    @objc func GoToWallet(){
-        let vc = storyboard?.instantiateViewController(withIdentifier: "wallet")
+    @objc func GoTowholeSeller(){
+        let vc = storyboard?.instantiateViewController(withIdentifier: "wholeSeller")
         vc?.modalTransitionStyle   = .crossDissolve
         vc?.modalPresentationStyle =  .overFullScreen
         self.present(vc!, animated: true, completion: nil)
@@ -297,22 +268,17 @@ gotosetLocation()
     
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 341
+            return 300
         }else {
-            if indexPath.row == 5 {
+            if indexPath.row == 1 {
                 if HelperK.getType() == "customer" {
                     return 0
                 }else{
-                    return 45
-                }
-            }else if indexPath.row == 2 {
-                if HelperK.getType() != "customer" {
-                    return 0
-                }else{
-                    return 45
+                    return 60
                 }
             }
-            return 45
+            return 60
+            
         
         }}
     
@@ -335,3 +301,4 @@ extension DrawerVC: UIViewControllerTransitioningDelegate {
         return transiton
     }
 }
+

@@ -21,12 +21,12 @@ class HomeTVC: UITableViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var seeDetailes: UILabel!{
         didSet{
-            seeDetailes.text = "see detailes"
+            seeDetailes.text = "see detailes".localizede
         }
     }
     @IBOutlet weak var addProductButton: UIButton!{
         didSet{
-            addProductButton.setTitle("add Product", for: .normal)
+            addProductButton.setTitle("add Product".localizede, for: .normal)
             addProductButton.setTitleColor(.white, for: .normal)
             addProductButton.floatButton(raduis: 15)
         }
@@ -42,8 +42,16 @@ class HomeTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     func configCell (product:ProductPayload){
-        itemImage.downlodImage(str: product.image ?? "")
+        guard  let image = product.image else {
+            itemImage.image = UIImage(named: "Logo-01 1")
+            return
+        }
+        itemImage.downlodImage(str: image)
+        if LocalizationManager.shared.getLanguage() == .English {
         productName.text = product.title
+        }else{
+            productName.text = product.titleAr
+        }
         productPrice.text = "\(product.price ?? 0)"
     }
 }

@@ -14,22 +14,22 @@ class ChangePasswordVC: UIViewController {
     @IBOutlet weak var visableNew: UIButton!
     @IBOutlet weak var old: UITextField!{
         didSet{
-            old.placeholder = "oldPass"
+            old.placeholder = "oldPass".localizede
         }
     }
     @IBOutlet weak var newPassTF: UITextField!{
         didSet{
-            newPassTF.placeholder = "newPass"
+            newPassTF.placeholder = "newPass".localizede
         }
     }
     @IBOutlet weak var titlela: UILabel!{
         didSet{
-            titlela.text = "changepassword"
+            titlela.text = "changepassword".localizede
         }
     }
     @IBOutlet weak var changePass: UIButton!{
         didSet{
-            changePass.setTitle("changePass", for: .normal)
+            changePass.setTitle("changePass".localizede, for: .normal)
             changePass.floatButton(raduis: 20)
         }
     }
@@ -52,6 +52,7 @@ bindTextField()
         newPassTF.rx.text.orEmpty.bind(to: updatePass.newPassword).disposed(by: disposeBag)
 
     }
+   
     func backSubscribe(){
         back.rx.tap.subscribe {[weak self] (_) in
             guard let self = self else {return}
@@ -71,7 +72,7 @@ bindTextField()
                 guard let new = self.newPassTF.text , !new.isEmpty else{
                     return
                 }
-                self.updatePass.changePassword()
+                self.updatePass.changePassword(vc: self)
             }.disposed(by: disposeBag)
 
     }

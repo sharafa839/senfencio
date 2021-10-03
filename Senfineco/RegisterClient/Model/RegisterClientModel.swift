@@ -19,4 +19,14 @@ struct RegisterClientModel: Codable {
 struct RegisterClientModelPayload: Codable {
     let id, fname, lname, email: String?
     let phone, group: String?
+    let wholesaler: Wholesaler?
+
+}
+struct Wholesaler: Codable {
+    let company, crn: String
+
+    enum CodingKeys: String, CodingKey {
+        case company
+        case crn = "CRN"
+    }
 }

@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
 class CheckOutVC: UITableViewController {
 
     @IBOutlet weak var PlayView: UIView!{
@@ -19,12 +20,12 @@ class CheckOutVC: UITableViewController {
     @IBOutlet weak var Price: UILabel!
     @IBOutlet weak var PurchaceCost: UILabel!{
         didSet{
-            PurchaceCost.text = "purchaceCost"
+            PurchaceCost.text = "purchaceCost".localizede
         }
     }
     @IBOutlet weak var shippingAddress: UILabel!{
         didSet{
-            shippingAddress.text = "shippingAddress"
+            shippingAddress.text = "shippingAddress".localizede
         }
     }
     @IBOutlet weak var Address: UITextView!{
@@ -34,32 +35,54 @@ class CheckOutVC: UITableViewController {
     }
     @IBOutlet weak var totalPrice: UILabel!{
         didSet{
-            totalPrice.text = "totalPrice"
+            totalPrice.text = "totalPrice".localizede
         }
     }
     @IBOutlet weak var checkOut: UILabel!{
         didSet{
-            checkOut.text = "checkOut"
+            checkOut.text = "checkOut".localizede
         }
     }
     @IBOutlet weak var pricee: UILabel!
     @IBOutlet weak var payButton: UIButton!{
         didSet{
-            payButton.setTitle("Pay", for: .normal)
+            payButton.setTitle("Pay".localizede, for: .normal)
             payButton.setTitleColor(.white, for: .normal)
         }
     }
     var Pricee = String ()
     var address:AddressModelPayload?
+    var orderID = String()
+    let disposeBag = DisposeBag()
+    let addressVM = AddressVm()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(self.Pricee)
+
         pricee.text = Pricee
         Price.text = Pricee
         Address.text = address?.address?.street1
-        print(address)
+        print(self.orderID)
+        subscribeToCheck()
     }
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+    func subscribeToCheck(){
+        print(self.orderID)
+
+        payButton.rx.tap.subscribe {[weak self] (_) in
+            guard let self = self else {return}
+           
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "pay") as! PayVC
+            vc.orderId = self.orderID
+            vc.price = self.Pricee        
+                self.present(vc, animated: true, completion: nil)
+           
+        }.disposed(by: disposeBag)
+
     }
     
     // MARK: - Table view data source

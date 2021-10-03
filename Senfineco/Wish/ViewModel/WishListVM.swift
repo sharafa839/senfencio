@@ -23,10 +23,38 @@ class Wish {
                     }
                     self.wishResponse.onNext(wish)
                 }else{
-                    HelperK.showError(title: wishs?.message ?? "err", subtitle: "")
+                    HelperK.showError(title: wishs?.message ?? "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: wishs?.message ?? "err", subtitle: "")
+                HelperK.showError(title: wishs?.message ?? "err".localizede, subtitle: "")
+
+            }}}
+    func AddToCart(id:String)  {
+        APIs.genericApiWithPagination(pageNo: 0, url: URLS.addToCart, method: .post, paameters: paramter.AddToCart(customer: true, productID: id, quantity: 1), headers: Headers.TokenAcceptContentHeader()) { (cart:AddToCart?, err:Error?, code:Int?) in
+            if code == 200 {
+                if err == nil {
+                    HelperK.showSuccess(title: cart?.message ?? "", subtitle: "")
+                }else{
+                    HelperK.showError(title: cart?.error ?? "err".localizede, subtitle: "")
+                }}else{
+                HelperK.showError(title: cart?.error ?? "err".localizede, subtitle: "")
+
+            }
+        }
+    }
+    func deleteFromWishList(id:String,vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
+
+        APIs.genericApiWithPagination(pageNo: 0, url: URLS.delete+id, method: .delete, paameters:nil, headers: Headers.AccepTTokenHeaders()) { (del:AddToCart?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
+            if code == 200 {
+                if err == nil {
+                    HelperK.showSuccess(title: del?.message ?? "", subtitle: "")
+                }else{
+                    HelperK.showError(title: del?.message ?? "err".localizede, subtitle: "")
+                }
+            }else{
+                HelperK.showError(title: del?.message ?? "err".localizede, subtitle: "")
 
             }
         }

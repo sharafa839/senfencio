@@ -14,8 +14,16 @@ class Profile{
     var subscribeToRespnse : Observable<ProfileData> {
         return profileResponse
     }
-    func getData(){
+    private let UpdateprofileResponse = PublishSubject<UpdateProfile>.init()
+    var subscribeToUpdateRespnse : Observable<UpdateProfile> {
+        return UpdateprofileResponse
+    }
+    func getData(vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
+
         APIs.genericApiWithPagination(pageNo: 0, url:URLS.profile, method: .post, paameters: nil, headers: Headers.AccepTTokenHeaders()) { (profile:ProfileData?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
+
             if code == 200 {
                 if err == nil {
                     guard  let profile = profile else {
@@ -31,32 +39,37 @@ class Profile{
             }
         }
     }
-    func updateData(user:UserType,fname:String,lname:String,phone:String,email:String,crn:String?,company:String?){
+    func updateData(user:UserType,fname:String,lname:String,phone:String,email:String,crn:String?,company:String?,vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         switch user {
         case .Customer:
-            APIs.genericApiWithPagination(pageNo: 0, url:URLS.updateProfile + "customer", method: .put, paameters: paramter.updateProfileParms(fname: fname, lname: lname, email: email, phone: phone), headers: Headers.AccepTTokenHeaders()) { (profile:ProfileData?, err:Error?, code:Int?) in
+            APIs.genericApiWithPagination(pageNo: 0, url:URLS.updateProfile + "customer", method: .put, paameters: paramter.updateProfileParms(fname: fname, lname: lname, email: email, phone: phone), headers: Headers.AccepTTokenHeaders()) { (profile:UpdateProfile?, err:Error?, code:Int?) in
+                LottieHelper.shared.hideAnimation()
+
                 if code == 200 {
                     if err == nil {
                         guard  let profile = profile else {
                             return
                         }
-                        self.profileResponse.onNext(profile)
+                        self.UpdateprofileResponse.onNext(profile)
                     }else{
-                        HelperK.showError(title: "err", subtitle: "")
+                        HelperK.showError(title: "err".localizede, subtitle: "")
                     }
                 }else{
-                    HelperK.showError(title: "err", subtitle: "")
+                    HelperK.showError(title: "err".localizede, subtitle: "")
 
                 }
             }
         case.Seller :
-            APIs.genericApiWithPagination(pageNo: 0, url:URLS.updateProfile + "wholesaler", method: .put, paameters: paramter.updateProfileseller(fname: fname, lname: lname, email: email, phone: phone, company: company ?? "", crn: crn ?? ""), headers: Headers.AccepTTokenHeaders()) { (profile:ProfileData?, err:Error?, code:Int?) in
+            APIs.genericApiWithPagination(pageNo: 0, url:URLS.updateProfile + "wholesaler", method: .put, paameters: paramter.updateProfileseller(fname: fname, lname: lname, email: email, phone: phone, company: company ?? "", crn: crn ?? ""), headers: Headers.AccepTTokenHeaders()) { (profile:UpdateProfile?, err:Error?, code:Int?) in
+                LottieHelper.shared.hideAnimation()
+
                 if code == 200 {
                     if err == nil {
                         guard  let profile = profile else {
                             return
                         }
-                        self.profileResponse.onNext(profile)
+                        self.UpdateprofileResponse.onNext(profile)
                     }else{
                         HelperK.showError(title: "err", subtitle: "")
                     }
@@ -69,12 +82,12 @@ class Profile{
             print("")
         }
     }
-    func getProfileData(user:UserType)  {
+    func getProfileData(user:UserType,vc:UIViewController)  {
         switch user {
         case .Customer:
-          getData()
+            getData(vc: vc)
         case.Seller:
-            getData()
+            getData(vc: vc)
         default:
             print("")
         }

@@ -80,18 +80,7 @@ extension UIButton {
         }, completion: nil)
     }
     
-    func secAnimation() {
-        self.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-        UIView.animate(withDuration: 2.0,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.20),
-                       initialSpringVelocity: CGFloat(6.0),
-                       options: UIView.AnimationOptions.allowUserInteraction,
-                       animations: {
-                        self.transform = CGAffineTransform.identity
-                 },
-                       completion: {Void in()})
-              }
+ 
     
     func floatButton(raduis: CGFloat) {
         self.layer.cornerRadius = raduis

@@ -13,7 +13,8 @@ class Filter {
     var subscribeToRespons : Observable<FilterModelPayload>{
         return FilterRespnse
     }
-    func FetchData()  {
+    func FetchData(vc:UIViewController)  {
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.filter, method: .post, paameters: nil, headers: Headers.AccepTTokenHeaders()) {[weak self] (filter:FilterModel?, err:Error?, code:Int?) in
             guard let self = self else {return}
 
@@ -24,10 +25,10 @@ class Filter {
                     }
                     self.FilterRespnse.onNext(fil)
                 }else{
-                    HelperK.showError(title: filter?.message ?? "err", subtitle: "")
+                    HelperK.showError(title: filter?.message ?? "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: filter?.message ?? "err", subtitle: "")
+                HelperK.showError(title: filter?.message ?? "err".localizede, subtitle: "")
 
             }
         }

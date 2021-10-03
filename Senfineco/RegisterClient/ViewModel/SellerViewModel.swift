@@ -64,8 +64,10 @@ class SellerViewModel {
         }
     }
     
-    func register(){
+    func register(vc:UIViewController){
+        LottieHelper.shared.startAnimation(view: vc.view, name: "card")
         APIs.genericApiWithPagination(pageNo: 0, url: URLS.registerSeller, method: .post, paameters:paramter.registerseller(email: email.value, phone: phone.value, firstName: firstName.value, lastName: lastName.value, password: password.value, company: company.value, serilNumber: registerationNumber.value), headers: Headers.AcceptContentHeader()) {[weak self] (user:RegisterClientModel?, err:Error?, code:Int?) in
+            LottieHelper.shared.hideAnimation()
             if code == 200 {
                 if err == nil {
                     guard  let user = user else {
@@ -76,10 +78,10 @@ class SellerViewModel {
                     }
                     self.registerModelSubject.onNext(user)
                 }else{
-                    HelperK.showError(title: "err", subtitle: "")
+                    HelperK.showError(title: "err".localizede, subtitle: "")
                 }
             }else{
-                HelperK.showError(title: "err", subtitle: "")
+                HelperK.showError(title: "err".localizede, subtitle: "")
             }
             
         }

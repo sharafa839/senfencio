@@ -5,101 +5,122 @@
   Created by ahmed on 9/16/21.
   
 */
-"kind"
-"client"
-"seller"
-"result"
-"err"
-"Lang"
-"en"
-"ar"
-"Filter"
-"viewRecomed"
-"confirm"
-"oldPass"
-"newPass"
-"changepassword"
-"changePass"
-"aboutUs"
-"message"
-"subjectTF"
-"name"
-"sendMessage"
-"send"
-"change"
-"regnumber"
-"companyName"
-"email"
-"firstName"
-"lastName"
-"password"
-"phoneNumber"
-"editProfile"
-"Profile"
-"saveChanges"
-"editProfile"
-"Order at Senfineco : "
-"   OMR"
-"Closed orders"
-"Open orders"
-"myOrders"
-"wish List"
-"purchaceCost"
-"shippingAddress"
-"totalPrice"
-"checkOut"
-"Pay"
-"payCash"
-"payCredit"
-"SelectYourAddress"
-"addAddress"
-"srteet 1 "
-"street 2 "
-"city"
-"country"
-"zip"
-"markPlace"
-"addAddress"
-"CART"
-"totalPrice"
-"0 OMR"
-"Continue to checkout"
-"signUp"
-"firstName"
-"lastName"
-"registerationNumber"
-"company"
-"email"
-"phone"
-"pass"
-"signUp"
-"ifuhaveacc"
-"signIn"
-"addToCart"
-"pricePerUnit"
-"description"
-"howToUse"
-"numberOfUnits"
-"addToCartSucess"
-"product already exists in the cart"
-"havenorating"
-"1StarRating"
-"2StarRating"
-"3StarRating"
-"4StarRating"
-"5StarRating"
-"signIn"
-"phone"
-"password"
-"ifudon'thave"
-"carGuide"
-"hi "
-"myOrder"
-"wholeSaleMarket"
-"Favorite"
-"Lang"
-"contactUs"
-"ablut"
-"logOut"
-"Logout"
-"login"
+"phoneOrPasswordwrong" = "هناك خطأ في كلمة السر او الهاتف المحمول";
+"kind"  = "اختر نوع المستخدم ";
+"client" = "عميل";
+"seller" = "تاجر جملة";
+"result" = "النتيجة";
+"err" = "حدث خطأ ما";
+"Lang" = "اختر لغتك المفضلة";
+"en" = "الانجليزية";
+"ar" = "العربية";
+"Filter" = "تنقية";
+"viewRecomed" = "عرض الاقتراحات";
+"confirm" = "تأكيد";
+"oldPass" = "كلمة السر القديمة";
+"newPass" = "كلمة السر الجديدة";
+"changepassword" = "تغيير كلمة السر";
+"changePass" = "تغيير كلمة السر";
+"message" = "الرسالة";
+"subjectTF" = "الموضوع";
+"name" = "الاسم";
+"sendMessage" = "ارسل رسالة";
+"send" = "ارسال";
+"change" = "تغيير ";
+"regnumber" = "رقم السجل";
+"companyName" = "اسم الشركة";
+"email" = "البريد الالكتروني";
+"firstName" = "الاسم الاول";
+"lastName" = "الاسم الاخير";
+"password" = "كلمة السر";
+"phoneNumber" = "رقم الهاتف";
+"editProfile" = "تعديل حسابي";
+"Profile" = "حسابي";
+"saveChanges" = "حفظ التغيرات";
+"Order at Senfineco : " = "تم الطلب بتاريخ";
+"   OMR" = "    جنيه";
+"Closed orders" = "الطلبات المعلقة";
+"Open orders" = "الطلبات المفتوحة";
+"myOrders" = "طلباتي";
+"wish List" = "المفضلة";
+"purchaceCost" = "تكلفة الشراء";
+"shippingAddress" = "تكلفة الشحن";
+"totalPrice" = "السعر الكلي";
+"checkOut" = "دفع";
+"Pay" = "دفع";
+"payCash" = "تحويل بنكي";
+"payCredit" = "دفع الكتروني";
+"SelectYourAddress" = "اختر عنوانك";
+"addAddress" = "اضف عنوانك";
+"srteet 1 " = "شارع ١";
+"street 2 " = "شارع ٢";
+"city" = "المدينة";
+"country" = "البلد";
+"zip" = "الكود";
+"markPlace" = "علامة مميزه";
+"totalPrice" = "السعر الكلي";
+"0 OMR" = "٠ جنية";
+"Continue to checkout" = "استكمال الدفع";
+"signUp" = "تسجيل حساب";
+"registerationNumber" = "رقم السجل";
+"company" = "اسم الشركة";
+"email" = "البريد الالكتروني";
+"phone" = "الهاتف";
+"pass" = "كلمة السر";
+"signUp" = "تسجيل حساب";
+"ifuhaveacc" = "اذا كان لديك حساب";
+"signIn" = "سجل دخول";
+"addToCart" = "اضف إلى الكارت";
+"pricePerUnit" = "سعر الوحدة";
+"description" = "الوصف";
+"howToUse" = "كيفية الاستخدام";
+"numberOfUnits" = "عدد الوحدات";
+"addToCartSucess" = "تمت الاضافة إلى الكارت بنجاح ";
+"product already exists in the cart" = "هذا المنتج مضاف من قبل";
+"havenorating" = "ليس لديه تقييم ";
+"1StarRating" = "مقيم بنجمه واحدة";
+"2StarRating" = "مقيم بنجمتين";
+"3StarRating" = "مقيم ب ٣ نجوم";
+"4StarRating" ="مقيم ب ٤ نجوم";
+"5StarRating" ="مقيم ب ٥ نجوم";
+"signIn" = "تسجيل دخول";
+"phone" ="الهاتف";
+"password" ="كلمة السر";
+"ifudon'thave" = "اذا كان ليس لديك حساب";
+"carGuide" = "مرشد السيارة";
+"hi " = "اهلا  ";
+"myOrder" = "طلباتي";
+"wholeSaleMarket" = "سوق تاجر الجملة";
+"Favorite" = "المفضلة";
+"Langu" = "تغيير اللغة";
+"contactUs" = "تواصل معنا";
+"ablut" = "عنا";
+"logOut" = "تسجيل خروج";
+"Logout" = "تسجيل خروج";
+"login" = "تسجيل دخول";
+
+"CART" = "كارت";
+"aboutUs" = "عنا";
+"status" = "حالة الطلب";
+"items" = "  العناصر";
+"Items" = "  العناصر";
+"price" =  " السعر";
+"trackOrder" = "تتبع الطلب";
+"Welcome to our shop" = "مرحبا بك في متجرنا";
+"add Product" = "اضف إلى الكارت";
+"see detailes" = "تفاصيل";
+"addAddress" = "اضف عنوانك";
+"order at senfinceo" = "تم الطلب من سينفنكو";
+"status" = "الحالة";
+"Home" = "الرئيسية";
+"Ordera" = "طلباتي";
+"Favorite" = "المفضلة";
+"Profile" = "حسابي";
+"carType" = "الصناعة";
+"carTtpe" =" الصنع";
+"carModel" = "الموديل";
+"choose your car" = "اختر نوع السيارة";
+"chooseModel" = "اختر الموديل";
+"chooseMake" = "اختر الصناعة";
+"chooseType" = "اختر النوع";
+"arabic" = "انجليزي";
